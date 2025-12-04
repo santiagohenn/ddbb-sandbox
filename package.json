@@ -1,0 +1,27 @@
+{
+  "name": "jala-db-server",
+  "version": "1.0.0",
+  "description": "Clean architecture Node.js server with MySQL integration",
+  "main": "src/infrastructure/server.js",
+  "scripts": {
+    "start": "node src/infrastructure/server.js",
+    "dev": "nodemon src/infrastructure/server.js"
+  },
+  "keywords": [
+    "nodejs",
+    "mysql",
+    "clean-architecture",
+    "express"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.6.5",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
