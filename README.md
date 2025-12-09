@@ -1,6 +1,6 @@
 # Database Tables Viewer
 
-A Node.js web server built with Clean Architecture principles that displays MySQL database tables in a beautiful, formatted landing page.
+A Node.js web server built with Clean Architecture principles that displays MySQL database tables in a beautiful, formatted landing page for my students.
 
 ## 🏗️ Architecture
 
@@ -56,11 +56,29 @@ npm install
      - `DB_PORT`: MySQL port (default: 3306)
      - `PORT`: Server port (default: 3000)
 
+  3. (Optional) If you plan to use the frontend bundling with Webpack, install dev dependencies and build once:
+
+  ```bash
+  npm run build
+  ```
+
+  During development you can run Webpack in watch mode in a separate terminal:
+
+  ```bash
+  npm run dev:webpack
+  ```
+
 ## 🏃 Running the Application
 
 ### Development mode (with auto-reload):
 ```bash
 npm run dev
+```
+
+If you're also developing front-end assets, in another terminal run:
+
+```bash
+npm run dev:webpack
 ```
 
 ### Production mode:
@@ -110,6 +128,16 @@ git commit -m "Initial commit"
 git push heroku main
 ```
 
+Before deploying, make sure to build the frontend assets and include them in the release. Heroku's build environment will run `npm install` but not `npm run build` automatically unless you configure it. To ensure assets are built, add a `heroku-postbuild` script in `package.json` or build locally and push `dist/` to the repo.
+
+Example `package.json` scripts you may add:
+
+```json
+"scripts": {
+  "heroku-postbuild": "npm run build"
+}
+```
+
 ### Deploy to Railway:
 
 1. Install Railway CLI:
@@ -130,6 +158,8 @@ railway init
 railway up
 ```
 
+Railway runs build steps detected from `package.json`. Ensure `npm run build` is available if you want assets built during deployment.
+
 ### Deploy to Render:
 
 1. Create a new Web Service on [Render](https://render.com)
@@ -137,6 +167,8 @@ railway up
 3. Add MySQL database service
 4. Set environment variables in Render dashboard
 5. Deploy automatically on push
+
+Render and similar hosts also run the build step; ensure `npm run build` is present in the build command or add it to `package.json` as shown above.
 
 ## 📝 Environment Variables
 
@@ -148,6 +180,12 @@ Required variables in `.env`:
 - `DB_NAME`: Database name
 - `DB_PORT`: MySQL port (default: 3306)
 - `PORT`: Application port (default: 3000)
+
+Extra (optional):
+
+- `BANK_TABLE_NAME`: name of the table displayed by `/bank`
+- `CUSTOM_SQL_QUERY`: SQL string executed by the `/query` page
+
 
 ## 🎨 Features
 
@@ -166,6 +204,9 @@ Required variables in `.env`:
 - **MySQL2**: MySQL client
 - **EJS**: Template engine
 - **dotenv**: Environment variable management
+ - **Webpack**: Bundles front-end assets (JS/CSS)
+ - **Babel**: Transpiles modern JS for browser compatibility
+
 
 ## 📄 License
 
@@ -178,3 +219,27 @@ Your Name
 ---
 
 Made with ❤️ using Clean Architecture
+
+## Webpack: How it works here
+
+- Entry: `src/frontend/index.js` imports `src/frontend/styles.css`.
+- Build output: `dist/main.bundle.js` and `dist/main.css`.
+- Views include these assets when `NODE_ENV=production` so the server will serve the built files from `/dist`.
+
+Commands:
+
+```bash
+# build production assets
+npm run build
+
+# watch and rebuild during development
+npm run dev:webpack
+```
+
+Serving locally with built assets:
+
+1. Build assets: `npm run build`
+2. Start the server: `npm start`
+3. Open `http://localhost:3000`
+
+If you prefer live reload for frontend changes, run `npm run dev:webpack` in a separate terminal while running `npm run dev` for the backend.

@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bank View</title>
+  <% if (process.env.NODE_ENV === 'production') { %>
+    <link rel="stylesheet" href="/dist/main.css">
+    <script defer src="/dist/main.bundle.js"></script>
+  <% } %>
   <style>
     * {
       margin: 0;

@@ -28,6 +28,8 @@ class Server {
     this.app.set('views', path.join(__dirname, '../interface/views'));
 
     // Static files
+    // Serve built webpack assets from /dist
+    this.app.use('/dist', express.static(path.join(__dirname, '../../dist')));
     this.app.use(express.static(path.join(__dirname, '../interface/public')));
 
     // Parse JSON bodies

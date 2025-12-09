@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Front end!</title>
+  <% if (process.env.NODE_ENV === 'production') { %>
+    <link rel="stylesheet" href="/dist/main.css">
+    <script defer src="/dist/main.bundle.js"></script>
+  <% } else { %>
+    <!-- In development, run `npm run dev:webpack` to watch and build assets to /dist -->
+  <% } %>
   <style>
     * {
       margin: 0;
